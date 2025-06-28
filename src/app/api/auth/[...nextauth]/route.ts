@@ -7,7 +7,7 @@ const handler = NextAuth({
       clientId: process.env.SPOTIFY_CLIENT_ID!,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET!,
       authorization:
-        "https://accounts.spotify.com/authorize?scope=user-read-email,user-read-private",
+        "https://accounts.spotify.com/authorize?scope=user-read-email,user-read-private,playlist-read-private,user-read-playback-state",
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,

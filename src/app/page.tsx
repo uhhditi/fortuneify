@@ -2,6 +2,11 @@
 
 import { useSession, signIn, signOut } from "next-auth/react";
 import { ChangeEvent, useEffect, useState } from "react";
+import { TarotFront, TarotBack } from './assets/TarotCard';
+
+import styles from './home.module.css';
+
+
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -9,6 +14,7 @@ export default function Home() {
   const [selectedPlaylist, setSelectedPlaylist] = useState<string>("");
   const [tracks, setTracks] = useState<{  label: string; artist:string }[]>([]);
   const [responseText, setResponseText] = useState("");
+  const [showTarot, setShowTarot] = useState(false);
 
   
 
@@ -90,6 +96,7 @@ export default function Home() {
     fetchTracks();
   }, [session, selectedPlaylist])
 
+  //ai result
   async function askGemini(){
     const stringArrSongs = tracks.map(track => `${track.label} - ${track.artist}`)
     const res = await fetch ('/api/gemini', {
@@ -104,10 +111,15 @@ export default function Home() {
  
  
   if (status === "loading") {
-    return <p>Loading...</p>;
+    return <p>predicting the future...</p>;
   }
 
   async function handleClick() {
+    setShowTarot(true);
+    //askGemini();
+  }
+
+  async function tarotFlip(){
     askGemini();
   }
 
@@ -115,36 +127,57 @@ export default function Home() {
   return (
     <div>
       {session ? (
-        <div>
-          <h1>Welcome, {session.user?.name}!</h1>
-          <img src={session.user?.image!} alt="Profile" width={50} height={50} />
-
-          <h2>choose a playlist!</h2>
-          <select value={selectedPlaylist} onChange={handlePlaylistSelect} className="border p-2">
-            <option value="" disabled>select a playlist...</option>
-            {playlists.map((playlist) => (
-              <option key={playlist.label} value={playlist.id}>
-                {playlist.label}
-              </option>
-            ))}
-          </select>
-
-          <button onClick={handleClick}>analyze my playlist...</button>
-          {tracks.length > 0 && (
-            <div>
-              <h3>playlist contents:</h3>
-              <ul>
-                {tracks.map((track, index) => (
-                  <li key={index}>{track.label}</li>
-                ))}
-              </ul>
+        showTarot ? (
+          // Render tarot card if session & showTarot are true
+          <div>
+            <TarotFront playlistname= {selectedPlaylist} />
+            {/* You can add a button to flip the card or go back here */}
+          </div>
+        ) : (
+          // Render playlist UI if session is true but showTarot is false
+          <div className={styles.home}>
+            <div className={styles.titleContainer}>
+              <div className={styles.fortuneify}>fortuneify</div>
+              <div className={styles.subtitle}>select a playlist and have your future told...</div>
+              <h1 className={styles.welcome}>welcome, {session.user?.name}.</h1>
             </div>
-          )}
-           <h3>your analysis:</h3>
-          {responseText && <p>{responseText}</p>}
-          <button onClick={() => signOut()}>Sign out</button>
-        </div>
+            {/* <img src={session.user?.image!} alt="Profile" width={50} height={50} /> */}
+            <div className={styles.playlistContainer}>
+              <h2 className={styles.largeSubtitle}>select playlist</h2>
+              <select className={styles["select-playlist"]}
+                value={selectedPlaylist}
+                onChange={handlePlaylistSelect}
+              >
+                <option value="" disabled>
+                  your library
+                </option>
+                {playlists.map((playlist) => (
+                  <option key={playlist.label} value={playlist.id}>
+                    {playlist.label}
+                  </option>
+                ))}
+              </select>
+    
+              <button className={styles.buttons} onClick={handleClick}>tell my fortune</button>
+              {/* {tracks.length > 0 && (
+                <div>
+                  <h3>playlist contents:</h3>
+                  <ul>
+                    {tracks.map((track, index) => (
+                      <li key={index}>{track.label}</li>
+                    ))}
+                  </ul>
+                </div>
+              )} */}
+            </div>
+            
+            <h3>your analysis:</h3>
+            {responseText && <p>{responseText}</p>}
+            <button onClick={() => signOut()}>Sign out</button>
+          </div>
+        )
       ) : (
+        // Render this if no session (not signed in)
         <div>
           <h1>Please sign in</h1>
           <button onClick={() => signIn("spotify")}>Sign in with Spotify</button>
@@ -153,5 +186,5 @@ export default function Home() {
     </div>
   );
 
-  
 }
+

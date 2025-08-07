@@ -10,7 +10,7 @@ export async function POST(req: Request) {
             model: "gemini-2.5-flash",
             contents: songs,
             config: {
-                systemInstruction: "Give a 1-2 sentence analysis of personality based on songs in playlist, make it funny/a roast",
+                systemInstruction: "Give a 1-2 fortune teller style fortune based on playlist contents",
                 temperature: 1.0,
               },
           });

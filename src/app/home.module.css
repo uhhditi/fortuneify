@@ -1,0 +1,93 @@
+.home {
+position: relative; 
+  width: 100%;
+  height: 100vh;    
+  background-color: #ebe8f6;
+}
+.titleContainer {
+    margin-top: 32px;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* centers children horizontally based on their own width */
+    gap: 12px;
+    text-align: center;
+  }  
+  .playlistContainer {
+    margin-top: 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* centers children horizontally based on their own width */
+    gap: 10px;
+    text-align: center;
+  }
+  .fortuneify {
+    font-size: 30px;
+    font-weight: 800;
+    font-family: Archivo;
+    color: #523092;
+  }
+  
+  .subtitle {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: Archivo;
+    color: #444;
+  }
+  
+  .welcome {
+    font-size: 26px;
+    font-weight: 700;
+    font-family: Archivo;
+    color: #000;
+    margin-top: 20px;
+  }
+  
+.largeSubtitle{
+    font-size: 22px;
+    font-weight: 600;
+    font-family: Archivo;
+    color: #000;
+    margin-top: 20px;
+}
+
+.select-playlist {
+    text-align: center;           /* center the displayed option text */
+    text-align-last: center; 
+    width: 250px;         /* control width as needed */
+    height: 50px;         /* increase vertical height */
+    background-color: #c4b8e2; 
+    font-family: 'Archivo'; 
+    color: rgb(0, 0, 0);    
+    font-size: 12px;      /* adjust font size */
+    border: none;         /* remove default border or customize */
+    border-radius: 2px;   /* rounded corners */
+    padding: 8px 12px;    /* padding inside dropdown */ /* removes default arrow for some browsers, optional */
+    appearance: none;     /* removes default arrow for some browsers, optional */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  .buttons {
+    text-align: center;           /* center the displayed option text */
+    text-align-last: center; 
+    width: 300px;         /* control width as needed */
+    height: 60px; 
+    margin-top: 50px;        /* increase vertical height */
+    background-color: #523092;
+    font-family: 'Archivo'; 
+    color: rgb(255, 255, 255);    
+    font-weight: 600;     /* white text for contrast */
+    font-size: 12px;      /* adjust font size */
+    border: none;         /* remove default border or customize */
+    border-radius: 8px;   /* rounded corners */
+    padding: 8px 12px;    /* padding inside dropdown */ /* removes default arrow for some browsers, optional */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    
+  }
+
+  .buttons:hover{
+    background-color: #301f5b; 
+  }
+

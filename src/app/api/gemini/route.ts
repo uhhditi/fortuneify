@@ -10,7 +10,7 @@ export async function POST(req: Request) {
             model: "gemini-2.5-flash",
             contents: songs,
             config: {
-                systemInstruction: "Give a 1-2 fortune teller style fortune based on playlist contents",
+                systemInstruction: "Provide a concise, one-sentence fortune or prediction for the upcoming future based on playlist contents in fortune teller style wording",
                 temperature: 1.0,
               },
           });

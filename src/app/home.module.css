@@ -73,7 +73,7 @@ position: relative;
     text-align-last: center; 
     width: 300px;         /* control width as needed */
     height: 60px; 
-    margin-top: 50px;        /* increase vertical height */
+    margin-top: 40px;        /* increase vertical height */
     background-color: #523092;
     font-family: 'Archivo'; 
     color: rgb(255, 255, 255);    
@@ -89,5 +89,38 @@ position: relative;
 
   .buttons:hover{
     background-color: #301f5b; 
+  }
+
+  .signOutButton {
+    text-align: center;           /* center the displayed option text */
+    text-align-last: center; 
+    width: 200px;         /* control width as needed */
+    height: 30px; 
+    margin-top: 120px;        /* increase vertical height */
+    background-color: #000000;
+    font-family: 'Archivo'; 
+    color: rgb(255, 255, 255);    
+    font-weight: 400;     /* white text for contrast */
+    font-size: 12px;      /* adjust font size */
+    border: none;         /* remove default border or customize */
+    border-radius: 4px;   /* rounded corners */
+    padding: 8px 12px;    /* padding inside dropdown */ /* removes default arrow for some browsers, optional */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    
+  }
+
+  .tarotContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;         /* optional vertical spacing */
+  }
+
+  .tarotText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;         /* optional vertical spacing */
   }
 

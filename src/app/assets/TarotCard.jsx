@@ -1,6 +1,6 @@
-export function TarotFront({ playlistname }) {
+export function TarotFront({ playlistname, profilepicture, onClick }) {
   return (
-    <svg width="400" height="666" viewBox="0 0 400 666" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="400" height="666" viewBox="0 0 400 666" fill="none" xmlns="http://www.w3.org/2000/svg"   onClick={onClick}>
       <g filter="url(#filter0_d_2004_21)">
         <g filter="url(#filter1_d_2004_21)">
           <g filter="url(#filter2_d_2004_21)">
@@ -16,8 +16,8 @@ export function TarotFront({ playlistname }) {
           stroke="#0E0E0E"
           strokeWidth="4"
         />
-        <line x1="34.4519" y1="102.317" x2="365.308" y2="102.317" stroke="black" strokeWidth="4" />
-        <line x1="34.2224" y1="546.939" x2="365.079" y2="546.939" stroke="black" strokeWidth="4" />
+        <line x1="37.2493" y1="102.317" x2="363.3083" y2="102.317" stroke="black" strokeWidth="4" />
+        <line x1="37.2493" y1="546.939" x2="363.3083" y2="546.939" stroke="black" strokeWidth="4" />
       </g>
       <text
         fill="black"
@@ -39,9 +39,35 @@ export function TarotFront({ playlistname }) {
         fontWeight="bold"
         letterSpacing="0em"
       >
-        <tspan x="100.257" y="597.555">{playlistname}</tspan>
       </text>
-      <rect x="70" y="130" width="256" height="393" fill="#D9D9D9" />
+      <foreignObject x="50" y="570" width="300" height="100">
+        <div
+          xmlns="http://www.w3.org/1999/xhtml"
+          style={{
+            fontFamily: 'Cormorant Garamond',
+            fontWeight: 'bold',
+            fontSize: '30px',
+            color: 'black',
+            overflowWrap: 'break-word',
+            wordBreak: 'break-word',
+            textAlign: 'center',
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          {playlistname ? playlistname : ''}
+        </div>
+      </foreignObject>
+      <foreignObject x="70" y="130" width="256" height="393">
+        <div xmlns="http://www.w3.org/1999/xhtml" style={{ width: "100%", height: "100%", filter: "blur(1px)"}}>
+          <img
+            src={profilepicture || <rect x="70" y="130" width="256" height="393" fill="#C0ABF6" /> }
+            alt="Profile"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </div>
+      </foreignObject>
+      {/* <rect x="70" y="130" width="256" height="393" fill="#C0ABF6" /> */}
       <defs>
         <filter
           id="filter0_d_2004_21"
@@ -120,9 +146,9 @@ export function TarotFront({ playlistname }) {
   );
 }
 
-export function TarotBack({ fortune }) {
+export function TarotBack({ fortune, onClick }) {
   return (
-    <svg width="400" height="666" viewBox="0 0 400 666" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="400" height="666" viewBox="0 0 400 666" fill="none" xmlns="http://www.w3.org/2000/svg"  onClick={onClick}>
       <g filter="url(#filter0_d_2002_72)">
         <g filter="url(#filter1_d_2002_72)">
           <g filter="url(#filter2_d_2002_72)">
@@ -138,7 +164,8 @@ export function TarotBack({ fortune }) {
           stroke="#0E0E0E"
           strokeWidth="4"
         />
-        <text
+       
+        {/* <text
           fill="black"
           xmlSpace="preserve"
           style={{ whiteSpace: 'pre' }}
@@ -149,7 +176,26 @@ export function TarotBack({ fortune }) {
         >
           <tspan x="68.0029" y="308.555">{fortune}</tspan>
           <tspan x="174.307" y="344.555">blah </tspan>
-        </text>
+        </text> */}
+        <foreignObject x="45" y="60" width="310" height="560">
+        <div
+          xmlns="http://www.w3.org/1999/xhtml"
+          style={{
+            fontFamily: 'Cormorant Garamond',
+            fontWeight: 'bold',
+            fontSize: '20px',
+            color: 'black',
+            overflowWrap: 'break-word',
+            wordBreak: 'break-word',
+            textAlign: 'left',
+            width: '100%',
+            height: '100%',
+            overflow: 'auto',
+          }}
+        >
+          {fortune? fortune : ''}
+        </div>
+      </foreignObject>
       </g>
       <defs>
         <filter

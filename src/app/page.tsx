@@ -12,16 +12,21 @@ export default function Home() {
   const { data: session, status } = useSession();
   const [playlists, setPlaylists] = useState<{  label: string; id:string }[]>([]);
   const [selectedPlaylist, setSelectedPlaylist] = useState<string>("");
+  const [selectedPlaylistName, setSelectedPlaylistName] = useState<string>("");
   const [tracks, setTracks] = useState<{  label: string; artist:string }[]>([]);
   const [responseText, setResponseText] = useState("");
   const [showTarot, setShowTarot] = useState(false);
+  const [tarotSide, setTarotSide] = useState(true);
 
   
 
 
   function handlePlaylistSelect(event: ChangeEvent<HTMLSelectElement>): void {
-    setSelectedPlaylist(event.target.value);
-    console.log("Selected Playlist ID:", event.target.value);
+    const newSelectedId = event.target.value;
+    setSelectedPlaylist(newSelectedId);
+  
+    const foundLabel = playlists.find(playlist => playlist.id === newSelectedId)?.label || "";
+    setSelectedPlaylistName(foundLabel);
   }
 
   useEffect(() => {
@@ -116,35 +121,61 @@ export default function Home() {
 
   async function handleClick() {
     setShowTarot(true);
-    //askGemini();
+    askGemini();
+  }
+  async function tarotFront(){
+    setTarotSide(true);
   }
 
-  async function tarotFlip(){
-    askGemini();
+  async function tarotBack(){
+    setTarotSide(false);
   }
 
   //UI
   return (
-    <div>
+    <div className={styles.home}>
       {session ? (
         showTarot ? (
-          // Render tarot card if session & showTarot are true
-          <div>
-            <TarotFront playlistname= {selectedPlaylist} />
-            {/* You can add a button to flip the card or go back here */}
+          // Only Tarot card inside the container, no playlist UI
+          <>
+          <div className={styles.titleContainer}>
+            <div className={styles.fortuneify}>fortuneify</div>
+            <div className={styles.subtitle}>select a playlist and have your future told...</div>
+            <h1 className={styles.welcome}>welcome, {session.user?.name}.</h1>
           </div>
+          <div className={styles.tarotContainer}>
+            {tarotSide ? (
+              <TarotFront playlistname={selectedPlaylistName} profilepicture={session.user?.image} onClick={tarotBack} />
+            ) : (
+              <TarotBack fortune={responseText || "predicting your future..."} onClick={tarotFront} />
+            )}
+            <button
+              className={styles.buttons}
+              onClick={() => {
+                setShowTarot(false);
+                setTarotSide(true); 
+                setResponseText("");
+              }}
+            >
+              read another fortune
+            </button>
+          </div>
+          
+        </>
+          
         ) : (
-          // Render playlist UI if session is true but showTarot is false
-          <div className={styles.home}>
+          // The playlist selection UI inside the same container
+          <>
             <div className={styles.titleContainer}>
               <div className={styles.fortuneify}>fortuneify</div>
               <div className={styles.subtitle}>select a playlist and have your future told...</div>
               <h1 className={styles.welcome}>welcome, {session.user?.name}.</h1>
             </div>
-            {/* <img src={session.user?.image!} alt="Profile" width={50} height={50} /> */}
+  
             <div className={styles.playlistContainer}>
               <h2 className={styles.largeSubtitle}>select playlist</h2>
-              <select className={styles["select-playlist"]}
+              <select
+                className={styles["select-playlist"]}
                 value={selectedPlaylist}
                 onChange={handlePlaylistSelect}
               >
@@ -152,32 +183,21 @@ export default function Home() {
                   your library
                 </option>
                 {playlists.map((playlist) => (
-                  <option key={playlist.label} value={playlist.id}>
+                  <option key={playlist.id} value={playlist.id}>
                     {playlist.label}
                   </option>
                 ))}
               </select>
-    
-              <button className={styles.buttons} onClick={handleClick}>tell my fortune</button>
-              {/* {tracks.length > 0 && (
-                <div>
-                  <h3>playlist contents:</h3>
-                  <ul>
-                    {tracks.map((track, index) => (
-                      <li key={index}>{track.label}</li>
-                    ))}
-                  </ul>
-                </div>
-              )} */}
+  
+              <button className={styles.buttons} onClick={handleClick}>
+                tell my fortune
+              </button>
+              <button className={styles.signOutButton} onClick={() => signOut()}>Sign out</button>
             </div>
-            
-            <h3>your analysis:</h3>
-            {responseText && <p>{responseText}</p>}
-            <button onClick={() => signOut()}>Sign out</button>
-          </div>
+        
+          </>
         )
       ) : (
-        // Render this if no session (not signed in)
         <div>
           <h1>Please sign in</h1>
           <button onClick={() => signIn("spotify")}>Sign in with Spotify</button>

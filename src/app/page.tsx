@@ -3,6 +3,7 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { TarotFront, TarotBack } from './assets/TarotCard';
+import { motion } from "framer-motion";
 
 import styles from './home.module.css';
 
@@ -123,32 +124,39 @@ export default function Home() {
     setShowTarot(true);
     askGemini();
   }
-  async function tarotFront(){
-    setTarotSide(true);
+  function tarotSwitch(){
+    setTarotSide(prev => !prev);
   }
 
-  async function tarotBack(){
-    setTarotSide(false);
-  }
+  
 
   //UI
   return (
     <div className={styles.home}>
       {session ? (
         showTarot ? (
-          // Only Tarot card inside the container, no playlist UI
+          // Header
           <>
           <div className={styles.titleContainer}>
             <div className={styles.fortuneify}>fortuneify</div>
             <div className={styles.subtitle}>select a playlist and have your future told...</div>
             <h1 className={styles.welcome}>welcome, {session.user?.name}.</h1>
           </div>
+          
+          {/* Tarot Card */}
           <div className={styles.tarotContainer}>
-            {tarotSide ? (
-              <TarotFront playlistname={selectedPlaylistName} profilepicture={session.user?.image} onClick={tarotBack} />
-            ) : (
-              <TarotBack fortune={responseText || "predicting your future..."} onClick={tarotFront} />
-            )}
+            <motion.div 
+            className={styles.card}
+            transition={{ duration: 0.7 }}
+            animate={{ rotateY: tarotSide ? 0 : 180 }}
+            onClick={tarotSwitch}>
+              <div className = {styles.cardFace}>
+              <TarotFront playlistname={selectedPlaylistName} profilepicture={session.user?.image} />
+              </div>
+             <div className={`${styles.cardFace} ${styles.cardBack}`}>
+             <TarotBack fortune={responseText || "predicting your future..."} />
+             </div>
+            </motion.div>
             <button
               className={styles.buttons}
               onClick={() => {
@@ -164,7 +172,7 @@ export default function Home() {
         </>
           
         ) : (
-          // The playlist selection UI inside the same container
+          // The playlist selection UI
           <>
             <div className={styles.titleContainer}>
               <div className={styles.fortuneify}>fortuneify</div>
@@ -198,9 +206,10 @@ export default function Home() {
           </>
         )
       ) : (
-        <div>
-          <h1>Please sign in</h1>
-          <button onClick={() => signIn("spotify")}>Sign in with Spotify</button>
+        //signup 
+        <div className={styles.playlistContainer}>
+          <h1 className={styles.welcome}>please sign in to predict your future</h1>
+          <button className={styles.signOutButton} onClick={() => signIn("spotify")}>Sign in with Spotify</button>
         </div>
       )}
     </div>

@@ -1,6 +1,6 @@
-export function TarotFront({ playlistname, profilepicture, onClick }) {
+export function TarotFront({ playlistname, profilepicture}) {
   return (
-    <svg width="400" height="666" viewBox="0 0 400 666" fill="none" xmlns="http://www.w3.org/2000/svg"   onClick={onClick}>
+    <svg width="400" height="666" viewBox="0 0 400 666" fill="none" xmlns="http://www.w3.org/2000/svg" >
       <g filter="url(#filter0_d_2004_21)">
         <g filter="url(#filter1_d_2004_21)">
           <g filter="url(#filter2_d_2004_21)">
@@ -46,7 +46,7 @@ export function TarotFront({ playlistname, profilepicture, onClick }) {
           style={{
             fontFamily: 'Cormorant Garamond',
             fontWeight: 'bold',
-            fontSize: '30px',
+            fontSize: '24px',
             color: 'black',
             overflowWrap: 'break-word',
             wordBreak: 'break-word',
@@ -59,11 +59,11 @@ export function TarotFront({ playlistname, profilepicture, onClick }) {
         </div>
       </foreignObject>
       <foreignObject x="70" y="130" width="256" height="393">
-        <div xmlns="http://www.w3.org/1999/xhtml" style={{ width: "100%", height: "100%", filter: "blur(1px)"}}>
+        <div xmlns="http://www.w3.org/1999/xhtml" style={{ width: "100%", height: "100%"}}>
           <img
             src={profilepicture || <rect x="70" y="130" width="256" height="393" fill="#C0ABF6" /> }
             alt="Profile"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            style={{ width: "100%", height: "100%", objectFit: "cover",  filter: "contrast(1.5) brightness(1.2) saturate(0.8) grayscale(0.5)", borderRadius:10 }}
           />
         </div>
       </foreignObject>
@@ -146,9 +146,9 @@ export function TarotFront({ playlistname, profilepicture, onClick }) {
   );
 }
 
-export function TarotBack({ fortune, onClick }) {
+export function TarotBack({ fortune}) {
   return (
-    <svg width="400" height="666" viewBox="0 0 400 666" fill="none" xmlns="http://www.w3.org/2000/svg"  onClick={onClick}>
+    <svg width="400" height="666" viewBox="0 0 400 666" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g filter="url(#filter0_d_2002_72)">
         <g filter="url(#filter1_d_2002_72)">
           <g filter="url(#filter2_d_2002_72)">
@@ -164,30 +164,18 @@ export function TarotBack({ fortune, onClick }) {
           stroke="#0E0E0E"
           strokeWidth="4"
         />
-       
-        {/* <text
-          fill="black"
-          xmlSpace="preserve"
-          style={{ whiteSpace: 'pre' }}
-          fontFamily="Cormorant Garamond"
-          fontSize={30}
-          fontWeight="bold"
-          letterSpacing="0em"
-        >
-          <tspan x="68.0029" y="308.555">{fortune}</tspan>
-          <tspan x="174.307" y="344.555">blah </tspan>
-        </text> */}
-        <foreignObject x="45" y="60" width="310" height="560">
+      
+        <foreignObject x="48" y="220" width="300" height="560">
         <div
           xmlns="http://www.w3.org/1999/xhtml"
           style={{
             fontFamily: 'Cormorant Garamond',
-            fontWeight: 'bold',
+            fontWeight: 200,
             fontSize: '20px',
             color: 'black',
             overflowWrap: 'break-word',
             wordBreak: 'break-word',
-            textAlign: 'left',
+            textAlign: 'center',
             width: '100%',
             height: '100%',
             overflow: 'auto',
